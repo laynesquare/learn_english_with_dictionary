@@ -34,19 +34,32 @@ const DictionaryPanel = () => {
         variant="outlined"
         sx={{
           bgcolor: 'rgba(0, 0, 0, 0.3)',
-          borderRadius: '1rem',
-
-          p: '1rem',
         }}
       >
-        <Grid container>
+        <Grid container sx={{ p: '1.5rem' }}>
           {/* actual word */}
-          <Grid item xs={12} sm={12} md={12} sx={{ wordWrap: 'break-word' }}>
-            <Typography variant="h3" color="primary">
+          <Grid
+            item
+            justifyContent="center"
+            xs={12}
+            sm={12}
+            md={12}
+            sx={{ wordWrap: 'break-word' }}
+          >
+            <Typography
+              variant="h3"
+              color="primary"
+              sx={{
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               {keyword.length !== 0 ? (
                 keyword[0].word
               ) : (
                 <Skeleton
+                  justifyContent="center"
                   variant="text"
                   width={'70%'}
                   sx={{ borderRadius: '0.5rem' }}
@@ -55,7 +68,15 @@ const DictionaryPanel = () => {
             </Typography>
 
             {/* phonetics */}
-            <Typography variant="h4" fontFamily={'georgeia'}>
+            <Typography
+              variant="h4"
+              fontFamily={'georgeia'}
+              sx={{
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
               {keyword.length !== 0 ? (
                 <>&#92;{keyword[0]?.phonetics[0]?.text}&#92;</>
               ) : (

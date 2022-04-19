@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <>
       <Grid container justifyContent="center">
-        <Typography variant="h5" sx={{ display: 'block', pb: '1rem' }}>
+        <Typography variant="h7" sx={{ display: 'block', pb: '1rem' }}>
           December 21st, 2021 All Rights Reservered
         </Typography>
       </Grid>

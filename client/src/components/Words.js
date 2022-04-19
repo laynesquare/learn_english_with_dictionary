@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Grid } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
-import { fetchDictionary } from '../actions/Dictionary.js';
+import { fetchDictionary } from '../actions/dictionary.js';
 import { useDispatch } from 'react-redux';
 
 const Words = ({ article, articleID }) => {

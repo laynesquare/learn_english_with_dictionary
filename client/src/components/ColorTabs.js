@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
+import { styled } from '@mui/material/styles';
 
 export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
   const [value, setValue] = React.useState('one');
@@ -29,12 +30,13 @@ export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
   };
 
   return (
-    <Box sx={{ width: '100%', ml: '1rem' }}>
+    <Box sx={{ width: '80%' }}>
       <Tabs
         value={value}
         onChange={handleChange}
         indicatorColor="primary"
         aria-label="panel switching"
+        sx={{ height: '4rem' }}
       >
         <Tab
           icon={<HomeIcon />}
@@ -42,7 +44,7 @@ export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
           disableRipple={true}
           value="one"
           label="Home"
-          sx={{ fontSize: '1rem' }}
+          sx={{ textTransform: 'none' }}
         />
         <Tab
           icon={<ArticleSharpIcon />}
@@ -50,7 +52,7 @@ export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
           disableRipple={true}
           value="two"
           label="Result"
-          sx={{ fontSize: '1rem' }}
+          sx={{ textTransform: 'none' }}
         />
       </Tabs>
     </Box>

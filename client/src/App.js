@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Container,
 } from '@mui/material';
 
 import './index.css';
@@ -55,68 +56,85 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h3" align="center" sx={{ pt: '1rem' }} gutterBottom>
-        Learn English with Dictionary
-      </Typography>
-      <Typography
-        variant="h6"
-        display="block"
-        align="center"
-        sx={{ width: '80', ml: 'auto', mr: 'auto', mb: '2rem' }}
-        gutterBottom
-      >
-        Facilitate English learning through a dicitonary.
-      </Typography>
+    <>
+      {/* Everything is inside this container */}
+      <Container maxWidth="xl" sx={{ p: '1rem 1rem' }}>
+        <Typography
+          variant="h2"
+          align="center"
+          sx={{ pt: '1rem', fontFamily: 'Grenze Gotisch' }}
+          gutterBottom
+        >
+          Learn English with Dictionary
+        </Typography>
+        <Typography
+          variant="h6"
+          display="block"
+          align="center"
+          sx={{
+            width: '80',
+            ml: 'auto',
+            mr: 'auto',
+            mb: '2rem',
+            fontFamily: 'Grenze Gotisch',
+          }}
+          gutterBottom
+        >
+          Facilitate English learning through a dictionary.
+        </Typography>
 
-      <form
-        autoComplete="off"
-        noValidate
-        onSubmit={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        <Grid container justifyContent="center" spacing={2} alignItems="center">
-          <Grid item>
-            <CssTextField
-              required
-              size="string"
-              label="Search for a keyword"
-              placeholder="e.g. egregious"
-              autoComplete="off"
-              onChange={(e) => {
-                setKeyword(`${e.target.value}`);
-              }}
-              InputProps={{
-                inputProps: {
-                  style: { textAlign: 'center' },
-                },
-              }}
-              InputLabelProps={{
-                style: { color: '#ff616f' },
-              }}
-              color="primary"
-            ></CssTextField>
+        <form
+          autoComplete="off"
+          noValidate
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <Grid
+            container
+            justifyContent="center"
+            spacing={2}
+            alignItems="center"
+          >
+            <Grid item>
+              <CssTextField
+                required
+                size="medium"
+                label="Search for a keyword"
+                placeholder="e.g. egregious"
+                autoComplete="off"
+                onChange={(e) => {
+                  setKeyword(`${e.target.value}`);
+                }}
+                InputProps={{
+                  inputProps: {
+                    style: { textAlign: 'center' },
+                  },
+                }}
+                InputLabelProps={{
+                  style: { color: '#ff616f' },
+                }}
+                color="secondary"
+              ></CssTextField>
+            </Grid>
+            <Grid item>
+              <Button color="primary" variant="contained" type="submit">
+                Get!
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Button color="primary" variant="contained" type="submit">
-              GET!
-            </Button>
+        </form>
+
+        <Grid container spacing={3} sx={{ mt: '0.5rem' }}>
+          <Grid item xs={12} sm={8} md={8}>
+            <Display />
+          </Grid>
+          <Grid item xs={12} sm={4} md={4} sx={{ mt: '4rem' }}>
+            <DictionaryPanel />
           </Grid>
         </Grid>
-      </form>
-
-      <Grid container spacing={2} sx={{ p: '0 2rem' }}>
-        <Grid item xs={12} sm={8} md={8}>
-          <Display />
-        </Grid>
-        <Grid item xs={12} sm={4} md={4} sx={{ mt: '72px' }}>
-          <DictionaryPanel />
-        </Grid>
-      </Grid>
-
+      </Container>
       <Footer />
-
       {/* down below is a dialog triggered when textfield is empty */}
       <Dialog
         open={open}
@@ -125,7 +143,7 @@ const App = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          TEXTFIELD CANNOT BE EMPTY
+          Textfield cannot be empty
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -138,7 +156,7 @@ const App = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 };
 

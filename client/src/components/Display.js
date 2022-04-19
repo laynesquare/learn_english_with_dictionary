@@ -70,11 +70,11 @@ const Display = () => {
       <Paper
         variant="outlined"
         sx={{
-          borderRadius: '1rem',
+          // borderRadius: '0.5rem',
           mb: '1rem',
         }}
       >
-        <Grid container spacing={5} padding={3} justifyContent={'center'}>
+        <Grid container spacing={5} padding={5} justifyContent={'center'}>
           {typeof articles.response !== 'undefined' &&
           articles.integrity.length !== 0 &&
           !panelSwitch ? (
@@ -115,7 +115,7 @@ const Display = () => {
               );
             })
           ) : (
-            <Grid item sx={{ height: '600px' }}>
+            <Grid item>
               <Typography variant="h5">
                 {panelSwitch ? <Documentation /> : <NoSearchResult />}
               </Typography>
