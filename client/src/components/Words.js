@@ -1,17 +1,19 @@
 import React from 'react';
-import { Typography, Grid } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
+import { Typography, Grid, useMediaQuery } from '@mui/material';
+
 import { fetchDictionary } from '../actions/dictionary.js';
 import { useDispatch } from 'react-redux';
+import { theme } from '../themes/theme.js';
 
-const Words = ({ article, articleID }) => {
+const Words = ({ article, articleID, handleOpenDicModal }) => {
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const words = article.split(' ');
 
   return (
     <>
-      <Grid container>
-        {words.map((word) => {
+      <Grid container p={1}>
+        {words.map((word, index) => {
           const regex = /[^\w\s]/g;
 
           const resultAfterFiltering = {
@@ -90,7 +92,7 @@ const Words = ({ article, articleID }) => {
           filterWords();
 
           return (
-            <Grid item key={uuidv4()}>
+            <Grid item key={index}>
               <Typography variant="h7">
                 {resultAfterFiltering.initialPunc !== null ? (
                   <>&nbsp;{resultAfterFiltering.initialPunc}</>
@@ -102,12 +104,17 @@ const Words = ({ article, articleID }) => {
                 variant="h7"
                 sx={{
                   '&:hover': {
-                    color: 'red',
-                    transform: 'rotate(100deg)',
+                    color: theme.palette.secondary.main,
                   },
                 }}
                 onClick={() => {
-                  dispatch(fetchDictionary(resultAfterFiltering.actualWord));
+                  dispatch(
+                    fetchDictionary(
+                      resultAfterFiltering.actualWord,
+                      isMobile,
+                      handleOpenDicModal
+                    )
+                  );
                 }}
               >
                 {resultAfterFiltering.initialPunc !== null ? (

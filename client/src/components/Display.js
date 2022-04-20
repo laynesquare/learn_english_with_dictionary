@@ -11,6 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
   Grow,
+  CardContent,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useSelector } from 'react-redux';
@@ -21,7 +22,7 @@ import NoSearchResult from './NoSearchResult';
 import Words from './Words';
 // import { v4 as uuidv4 } from 'uuid';
 
-const Display = () => {
+const Display = ({ handleOpenDicModal }) => {
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -70,7 +71,6 @@ const Display = () => {
       <Paper
         variant="outlined"
         sx={{
-          // borderRadius: '0.5rem',
           mb: '1rem',
         }}
       >
@@ -97,16 +97,17 @@ const Display = () => {
                       <CardMedia
                         image={`http://www.nytimes.com/${articles.response.docs[articleID].multimedia[0].url}`}
                         title="img-title"
-                        sx={{ height: '400px' }}
+                        sx={{ height: '300px' }}
                       />
 
                       <Typography
-                        variant="h6"
+                        variant="h7"
                         sx={{ margin: '0.5rem', display: 'block' }}
                       >
                         <Words
                           article={articles.response.docs[articleID].abstract}
                           articleID={articleID}
+                          handleOpenDicModal={handleOpenDicModal}
                         />
                       </Typography>
                     </Card>

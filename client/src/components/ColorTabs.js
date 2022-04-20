@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import { useEffect } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
-import { styled } from '@mui/material/styles';
 
 export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
   const [value, setValue] = React.useState('one');

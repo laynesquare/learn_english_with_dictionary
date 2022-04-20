@@ -9,7 +9,10 @@ import {
   DialogContentText,
   DialogTitle,
   Container,
+  Modal,
+  Box,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 import './index.css';
 import { styled } from '@mui/material/styles';
@@ -31,12 +34,29 @@ const CssTextField = styled(TextField)({
   },
 });
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  maxWidth: '50%',
+  boxShadow: 24,
+};
+
 const App = () => {
-  const handleClickOpen = () => {
+  ////////////////////////////////////////////////
+  //!  Modal for pop-up dictionary
+  const [openDicModal, setOpenDicModal] = useState(false);
+  const handleOpenDicModal = () => setOpenDicModal(true);
+  const handleCloseDicModal = () => setOpenDicModal(false);
+  ////////////////////////////////////////////////
+
+  //Diaglog for pop-up search error
+  const handleDiaglogClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleDiaglogClose = () => {
     setOpen(false);
   };
   const [open, setOpen] = useState(false);
@@ -48,7 +68,7 @@ const App = () => {
     e.preventDefault();
 
     if (keyword === '') {
-      handleClickOpen();
+      handleDiaglogClickOpen();
     } else {
       dispatch(fetchArticles(keyword));
       dispatch(fetchDictionary(keyword));
@@ -80,7 +100,7 @@ const App = () => {
           }}
           gutterBottom
         >
-          Facilitate English learning through a dictionary.
+          facilitate English learning through a dictionary
         </Typography>
 
         <form
@@ -111,34 +131,46 @@ const App = () => {
                     style: { textAlign: 'center' },
                   },
                 }}
-                InputLabelProps={{
-                  style: { color: '#ff616f' },
-                }}
                 color="secondary"
               ></CssTextField>
             </Grid>
             <Grid item>
-              <Button color="primary" variant="contained" type="submit">
-                Get!
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                sx={{ borderRadius: '10rem' }}
+              >
+                <SearchIcon />
               </Button>
             </Grid>
           </Grid>
         </form>
 
         <Grid container spacing={3} sx={{ mt: '0.5rem' }}>
-          <Grid item xs={12} sm={8} md={8}>
-            <Display />
+          <Grid item sm={12} md={12} lg={8}>
+            <Display handleOpenDicModal={handleOpenDicModal} />
           </Grid>
-          <Grid item xs={12} sm={4} md={4} sx={{ mt: '4rem' }}>
+          <Grid
+            item
+            sm={12}
+            md={12}
+            lg={4}
+            sx={{
+              mt: '4rem',
+              display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
+            }}
+          >
             <DictionaryPanel />
           </Grid>
         </Grid>
       </Container>
       <Footer />
       {/* down below is a dialog triggered when textfield is empty */}
+
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={handleDiaglogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -151,11 +183,36 @@ const App = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} size="large">
+          <Button onClick={handleDiaglogClose} size="large">
             Got it.
           </Button>
         </DialogActions>
       </Dialog>
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      {/*  */}
+      <>
+        <Button onClick={handleOpenDicModal}>Open modal</Button>
+        <Modal
+          open={openDicModal}
+          onClose={handleCloseDicModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <DictionaryPanel />
+          </Box>
+        </Modal>
+      </>
     </>
   );
 };

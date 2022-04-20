@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { fetchDictionary } from '../actions/dictionary';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { theme } from '../themes/theme';
 
 const DictionaryPanel = () => {
   const keyword = useSelector((state) => {
@@ -30,39 +31,31 @@ const DictionaryPanel = () => {
 
   return (
     <div>
-      <Paper
-        variant="outlined"
-        sx={{
-          bgcolor: 'rgba(0, 0, 0, 0.3)',
-        }}
-      >
-        <Grid container sx={{ p: '1.5rem' }}>
+      <Paper variant="outlined">
+        <Grid container sx={{ p: '2rem' }}>
+          {/* <Grow in> */}
           {/* actual word */}
-          <Grid
-            item
-            justifyContent="center"
-            xs={12}
-            sm={12}
-            md={12}
-            sx={{ wordWrap: 'break-word' }}
-          >
+          <Grid item justifyContent="center" xs={12} sm={12} md={12}>
             <Typography
               variant="h3"
-              color="primary"
+              color="secondary"
               sx={{
                 textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center',
+                letterSpacing: '0.1rem',
+                wordWrap: 'break-word',
               }}
             >
               {keyword.length !== 0 ? (
                 keyword[0].word
               ) : (
                 <Skeleton
-                  justifyContent="center"
                   variant="text"
                   width={'70%'}
-                  sx={{ borderRadius: '0.5rem' }}
+                  sx={{
+                    borderRadius: '0.5rem',
+                    display: 'block',
+                    margin: 'auto',
+                  }}
                 />
               )}
             </Typography>
@@ -73,18 +66,20 @@ const DictionaryPanel = () => {
               fontFamily={'georgeia'}
               sx={{
                 textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center',
               }}
             >
               {keyword.length !== 0 ? (
-                <>&#92;{keyword[0]?.phonetics[0]?.text}&#92;</>
+                <>{keyword[0]?.phonetics[0]?.text}</>
               ) : (
                 <Skeleton
                   variant="text"
-                  height={40}
+                  height={10}
                   width={'30%'}
-                  sx={{ borderRadius: '0.5rem' }}
+                  sx={{
+                    borderRadius: '0.5rem',
+                    display: 'block',
+                    margin: 'auto',
+                  }}
                 />
               )}
             </Typography>
@@ -94,59 +89,57 @@ const DictionaryPanel = () => {
             {keyword.length !== 0 ? (
               keyword[keyword.length - 1].defNumArr.map((num, index) => {
                 return (
-                  <Grow in>
-                    <Grid container key={index}>
-                      <Grid item xs={12} sm={12} md={12} sx={{ mt: '1rem' }}>
-                        <Typography
-                          variant="h5"
-                          sx={{
-                            '&::before': {
-                              content: "'-'",
-                            },
-                          }}
-                        >
-                          {keyword[0].meanings[num].partOfSpeech}
-                        </Typography>
-                      </Grid>
+                  <Grid container key={index}>
+                    <Grid item xs={12} sm={12} md={12} sx={{ mt: '1rem' }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          '&::before': {
+                            content: "'-'",
+                          },
+                        }}
+                      >
+                        {keyword[0].meanings[num].partOfSpeech}
+                      </Typography>
+                    </Grid>
 
-                      <Grid item xs={12} sm={12} md={12}>
+                    <Grid item xs={12} sm={12} md={12}>
+                      <Typography
+                        variant="h7"
+                        component={'div'}
+                        sx={{
+                          ml: '0.5rem',
+                          '&::before': {
+                            content: "'Def.: '",
+                            color: theme.palette.secondary.main,
+                          },
+                        }}
+                      >
+                        {keyword[0].meanings[num].definitions[0].definition}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={12} md={12}>
+                      {typeof keyword[0].meanings[num].definitions[0]
+                        .example !== 'undefined' ? (
                         <Typography
                           variant="h7"
                           component={'div'}
                           sx={{
-                            ml: '1.3rem',
+                            ml: '0.5rem',
                             '&::before': {
-                              content: "'Def.: '",
-                              color: 'red',
+                              content: "'E.g. : '",
+                              color: theme.palette.secondary.main,
                             },
                           }}
                         >
-                          {keyword[0].meanings[num].definitions[0].definition}
+                          {keyword[0].meanings[num].definitions[0].example}
                         </Typography>
-                      </Grid>
-
-                      <Grid item xs={12} sm={12} md={12}>
-                        {typeof keyword[0].meanings[num].definitions[0]
-                          .example !== 'undefined' ? (
-                          <Typography
-                            variant="h7"
-                            component={'div'}
-                            sx={{
-                              ml: '1.3rem',
-                              '&::before': {
-                                content: "'E.g.: '",
-                                color: 'red',
-                              },
-                            }}
-                          >
-                            {keyword[0].meanings[num].definitions[0].example}
-                          </Typography>
-                        ) : (
-                          ''
-                        )}
-                      </Grid>
+                      ) : (
+                        ''
+                      )}
                     </Grid>
-                  </Grow>
+                  </Grid>
                 );
               })
             ) : (
@@ -160,7 +153,7 @@ const DictionaryPanel = () => {
                   </Skeleton>
                   <Skeleton
                     variant="rectangle"
-                    height={100}
+                    height={50}
                     sx={{ mt: '1rem', ml: '1rem', borderRadius: '0.5rem' }}
                     width={'90%'}
                   />
@@ -210,6 +203,7 @@ const DictionaryPanel = () => {
               </Box>
             )}
           </Grid>
+          {/* </Grow> */}
         </Grid>
       </Paper>
     </div>
