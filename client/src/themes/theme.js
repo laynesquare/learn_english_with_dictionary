@@ -22,10 +22,10 @@ export const theme = createTheme({
   },
 
   palette: {
-    primary: { main: '#ff8161' },
+    primary: { main: '#ff8161', light: '#fff461' },
     secondary: { main: '#ff616f' },
     background: { default: '#18191A' },
-    text: { primary: '#F5F6F7' },
+    text: { primary: '#F5F6F7', secondary: '#DDDDDD' },
     mode: 'dark',
   },
 });

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
 
-export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
+export default function ColorTabs({ setPanelSwitch, panelSwitch, articles }) {
   const [value, setValue] = React.useState('one');
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export default function ColorTabs({ setPanelSwitch, panelSwitch }) {
           value="two"
           label="Result"
           sx={{ textTransform: 'none' }}
+          disabled={!Boolean(articles?.integrity?.length)}
         />
       </Tabs>
     </Box>

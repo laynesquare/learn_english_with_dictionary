@@ -7,9 +7,7 @@ import {
   Skeleton,
   Box,
   Avatar,
-  Grow,
 } from '@mui/material';
-
 import { useSelector } from 'react-redux';
 import { fetchDictionary } from '../actions/dictionary';
 import { useEffect } from 'react';
@@ -24,8 +22,8 @@ const DictionaryPanel = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (keyword.length === 0) {
-      dispatch(fetchDictionary('welcome'));
+    if (!keyword.length) {
+      dispatch(fetchDictionary('none'));
     }
   });
 
@@ -33,7 +31,6 @@ const DictionaryPanel = () => {
     <div>
       <Paper variant="outlined">
         <Grid container sx={{ p: '2rem' }}>
-          {/* <Grow in> */}
           {/* actual word */}
           <Grid item justifyContent="center" xs={12} sm={12} md={12}>
             <Typography
@@ -203,7 +200,6 @@ const DictionaryPanel = () => {
               </Box>
             )}
           </Grid>
-          {/* </Grow> */}
         </Grid>
       </Paper>
     </div>

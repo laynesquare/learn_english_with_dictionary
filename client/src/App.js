@@ -1,30 +1,16 @@
-import {
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Container,
-  Modal,
-  Box,
-} from '@mui/material';
+import { Grid, Typography, TextField, Button, Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-
 import './index.css';
 import { styled } from '@mui/material/styles';
 import Display from './components/Display';
-
+import EmptyTextFieldPrompt from './components/EmptyTextFieldPrompt';
 import { useState } from 'react';
 import { fetchArticles } from './actions/articles.js';
 import { fetchDictionary } from './actions/dictionary.js';
 import { useDispatch } from 'react-redux';
-
 import Footer from './components/Footer';
 import DictionaryPanel from './components/DictionaryPanel';
+import ResposiveDictionary from './components/ResposiveDictionary';
 
 const CssTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -34,33 +20,17 @@ const CssTextField = styled(TextField)({
   },
 });
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  maxWidth: '50%',
-  boxShadow: 24,
-};
-
 const App = () => {
-  ////////////////////////////////////////////////
-  //!  Modal for pop-up dictionary
-  const [openDicModal, setOpenDicModal] = useState(false);
-  const handleOpenDicModal = () => setOpenDicModal(true);
-  const handleCloseDicModal = () => setOpenDicModal(false);
-  ////////////////////////////////////////////////
-
-  //Diaglog for pop-up search error
-  const handleDiaglogClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDiaglogClose = () => {
-    setOpen(false);
-  };
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  ////////////////////////////////////////////////
+  const [dicModalOpen, setDicModalOpen] = useState(false);
+  const handleDicModalOpen = () => setDicModalOpen(true);
+  const handleDicModalClose = () => setDicModalOpen(false);
+  ////////////////////////////////////////////////
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const handleDialogOpen = () => setDialogOpen(true);
+  const handleDialogClose = () => setDialogOpen(false);
+  ////////////////////////////////////////////////
 
   const [keyword, setKeyword] = useState('');
 
@@ -68,7 +38,7 @@ const App = () => {
     e.preventDefault();
 
     if (keyword === '') {
-      handleDiaglogClickOpen();
+      handleDialogOpen();
     } else {
       dispatch(fetchArticles(keyword));
       dispatch(fetchDictionary(keyword));
@@ -121,7 +91,7 @@ const App = () => {
                 required
                 size="medium"
                 label="Search for a keyword"
-                placeholder="e.g. egregious"
+                placeholder="e.g. government"
                 autoComplete="off"
                 onChange={(e) => {
                   setKeyword(`${e.target.value}`);
@@ -139,7 +109,9 @@ const App = () => {
                 color="primary"
                 variant="contained"
                 type="submit"
-                sx={{ borderRadius: '10rem' }}
+                sx={{
+                  borderRadius: '10rem',
+                }}
               >
                 <SearchIcon />
               </Button>
@@ -149,7 +121,7 @@ const App = () => {
 
         <Grid container spacing={3} sx={{ mt: '0.5rem' }}>
           <Grid item sm={12} md={12} lg={8}>
-            <Display handleOpenDicModal={handleOpenDicModal} />
+            <Display handleDicModalOpen={handleDicModalOpen} />
           </Grid>
           <Grid
             item
@@ -159,60 +131,26 @@ const App = () => {
             sx={{
               mt: '4rem',
               display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
+              alignSelf: 'start',
+              position: 'sticky',
+              top: '0',
             }}
           >
             <DictionaryPanel />
           </Grid>
         </Grid>
       </Container>
-      <Footer />
-      {/* down below is a dialog triggered when textfield is empty */}
+      {/* <Footer /> */}
 
-      <Dialog
-        open={open}
-        onClose={handleDiaglogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Textfield cannot be empty
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Enter a keyword for search.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDiaglogClose} size="large">
-            Got it.
-          </Button>
-        </DialogActions>
-      </Dialog>
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      {/*  */}
-      <>
-        <Button onClick={handleOpenDicModal}>Open modal</Button>
-        <Modal
-          open={openDicModal}
-          onClose={handleCloseDicModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <DictionaryPanel />
-          </Box>
-        </Modal>
-      </>
+      <EmptyTextFieldPrompt
+        handleDialogClose={handleDialogClose}
+        dialogOpen={dialogOpen}
+      />
+
+      <ResposiveDictionary
+        dicModalOpen={dicModalOpen}
+        handleDicModalClose={handleDicModalClose}
+      />
     </>
   );
 };

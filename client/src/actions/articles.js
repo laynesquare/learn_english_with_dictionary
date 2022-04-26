@@ -27,13 +27,3 @@ export const fetchArticles = (keyword) => async (dispatch) => {
     console.log(error.message);
   }
 };
-
-export const fetchDictionary = (keyword) => async (dispatch) => {
-  try {
-    const { data } = await api.fetchDictionary(keyword);
-    const defNum = data[0].meanings.length;
-    dispatch({ type: 'SEARCH', payload: [...data, defNum] });
-  } catch (err) {
-    console.log(err.response.data.message);
-  }
-};

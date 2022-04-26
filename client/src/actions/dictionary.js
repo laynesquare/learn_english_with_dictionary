@@ -1,7 +1,7 @@
 import * as api from '../api/index.js';
 
 export const fetchDictionary =
-  (keyword, isMobile, handleOpenDicModal) => async (dispatch) => {
+  (keyword, isMobile, handleDicModalOpen) => async (dispatch) => {
     try {
       const { data } = await api.fetchDictionary(keyword);
 
@@ -23,9 +23,13 @@ export const fetchDictionary =
       });
 
       if (isMobile) {
-        handleOpenDicModal();
+        handleDicModalOpen();
       }
     } catch (err) {
+      dispatch({ type: 'CLEAR' });
+      if (isMobile) {
+        handleDicModalOpen();
+      }
       console.log(err.message);
     }
   };

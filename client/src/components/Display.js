@@ -1,38 +1,24 @@
 import React from 'react';
-import {
-  Button,
-  Paper,
-  Typography,
-  Card,
-  CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Grow,
-  CardContent,
-} from '@mui/material';
+import { Paper, Typography, Card, CardMedia, Grow } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useSelector } from 'react-redux';
 import Documentation from './Documentation';
 import { useEffect, useState } from 'react';
 import ColorTabs from './ColorTabs';
 import NoSearchResult from './NoSearchResult';
+import NoArticlesPrompt from './NoArticlesPrompt';
 import Words from './Words';
-// import { v4 as uuidv4 } from 'uuid';
 
-const Display = ({ handleOpenDicModal }) => {
-  const handleClickOpen = () => {
-    setOpen(true);
+const Display = ({ handleDicModalOpen }) => {
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
   };
-
-  const handleClose = () => {
-    setOpen(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   const [panelSwitch, setPanelSwitch] = useState(true);
-  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const articles = useSelector((state) => {
     return state.articles;
@@ -45,14 +31,14 @@ const Display = ({ handleOpenDicModal }) => {
       panelSwitch
     ) {
       setPanelSwitch(true); //打開開關
-      handleClickOpen();
+      handleDialogOpen();
     }
     if (
       typeof articles.response !== 'undefined' &&
       articles.integrity.length === 0
     ) {
       setPanelSwitch(true); //打開開關
-      handleClickOpen();
+      handleDialogOpen();
     }
     if (
       typeof articles.response !== 'undefined' &&
@@ -67,6 +53,7 @@ const Display = ({ handleOpenDicModal }) => {
       <ColorTabs
         setPanelSwitch={setPanelSwitch}
         panelSwitch={panelSwitch}
+        articles={articles}
       ></ColorTabs>
       <Paper
         variant="outlined"
@@ -107,7 +94,7 @@ const Display = ({ handleOpenDicModal }) => {
                         <Words
                           article={articles.response.docs[articleID].abstract}
                           articleID={articleID}
-                          handleOpenDicModal={handleOpenDicModal}
+                          handleDicModalOpen={handleDicModalOpen}
                         />
                       </Typography>
                     </Card>
@@ -125,25 +112,10 @@ const Display = ({ handleOpenDicModal }) => {
         </Grid>
       </Paper>
 
-      {/* down below is a dialog triggered when textfield is empty */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Cannot find anything.</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Enter another keyword for search.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} size="large">
-            Got it.
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <NoArticlesPrompt
+        handleDialogClose={handleDialogClose}
+        dialogOpen={dialogOpen}
+      />
     </>
   );
 };

@@ -5,7 +5,7 @@ import { fetchDictionary } from '../actions/dictionary.js';
 import { useDispatch } from 'react-redux';
 import { theme } from '../themes/theme.js';
 
-const Words = ({ article, articleID, handleOpenDicModal }) => {
+const Words = ({ article, articleID, handleDicModalOpen }) => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const words = article.split(' ');
@@ -112,7 +112,7 @@ const Words = ({ article, articleID, handleOpenDicModal }) => {
                     fetchDictionary(
                       resultAfterFiltering.actualWord,
                       isMobile,
-                      handleOpenDicModal
+                      handleDicModalOpen
                     )
                   );
                 }}
