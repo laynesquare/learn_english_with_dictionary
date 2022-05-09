@@ -70,7 +70,7 @@ const DictionaryPanel = () => {
               ) : (
                 <Skeleton
                   variant="text"
-                  height={10}
+                  height={40}
                   width={'30%'}
                   sx={{
                     borderRadius: '0.5rem',
@@ -150,35 +150,21 @@ const DictionaryPanel = () => {
                   </Skeleton>
                   <Skeleton
                     variant="rectangle"
+                    height={40}
+                    sx={{ mt: '1rem', ml: '1rem', borderRadius: '0.5rem' }}
+                    width={'90%'}
+                  />
+                </Box>
+                <Box sx={{ width: '100%', display: 'flex' }}>
+                  <Skeleton
+                    variant="circular"
+                    sx={{ height: '0.5rem', width: '0.5rem', mt: '1rem' }}
+                  >
+                    <Avatar />
+                  </Skeleton>
+                  <Skeleton
+                    variant="rectangle"
                     height={50}
-                    sx={{ mt: '1rem', ml: '1rem', borderRadius: '0.5rem' }}
-                    width={'90%'}
-                  />
-                </Box>
-                <Box sx={{ width: '100%', display: 'flex' }}>
-                  <Skeleton
-                    variant="circular"
-                    sx={{ height: '0.5rem', width: '0.5rem', mt: '1rem' }}
-                  >
-                    <Avatar />
-                  </Skeleton>
-                  <Skeleton
-                    variant="rectangle"
-                    height={100}
-                    sx={{ mt: '1rem', ml: '1rem', borderRadius: '0.5rem' }}
-                    width={'90%'}
-                  />
-                </Box>
-                <Box sx={{ width: '100%', display: 'flex' }}>
-                  <Skeleton
-                    variant="circular"
-                    sx={{ height: '0.5rem', width: '0.5rem', mt: '1rem' }}
-                  >
-                    <Avatar />
-                  </Skeleton>
-                  <Skeleton
-                    variant="rectangle"
-                    height={100}
                     sx={{ mt: '1rem', ml: '1rem', borderRadius: '0.5rem' }}
                     width={'90%'}
                   />

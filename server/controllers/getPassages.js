@@ -1,7 +1,7 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import NytApi from '../models/getApi.js';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config;
 
 const urlNyt = {
   url1: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=`,
@@ -12,9 +12,8 @@ const urlNyt = {
 export const getPassages = async (req, res) => {
   const { keyword } = req.query;
   try {
-    const { key } = await NytApi.findById('625c1971965596fb2e3faa4d');
     const { data } = await axios.get(
-      `${urlNyt.url1}${keyword}${urlNyt.url2}${key}`
+      `${urlNyt.url1}${keyword}${urlNyt.url2}${process.env.NYT_API_KEY}`
     );
 
     res.status(200).json(data);

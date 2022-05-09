@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Grid, useMediaQuery } from '@mui/material';
-
 import { fetchDictionary } from '../actions/dictionary.js';
 import { useDispatch } from 'react-redux';
 import { theme } from '../themes/theme.js';

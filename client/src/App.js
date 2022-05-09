@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { fetchArticles } from './actions/articles.js';
 import { fetchDictionary } from './actions/dictionary.js';
 import { useDispatch } from 'react-redux';
-import Footer from './components/Footer';
 import DictionaryPanel from './components/DictionaryPanel';
 import ResposiveDictionary from './components/ResposiveDictionary';
 
@@ -22,15 +21,14 @@ const CssTextField = styled(TextField)({
 
 const App = () => {
   const dispatch = useDispatch();
-  ////////////////////////////////////////////////
+
   const [dicModalOpen, setDicModalOpen] = useState(false);
   const handleDicModalOpen = () => setDicModalOpen(true);
   const handleDicModalClose = () => setDicModalOpen(false);
-  ////////////////////////////////////////////////
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const handleDialogOpen = () => setDialogOpen(true);
   const handleDialogClose = () => setDialogOpen(false);
-  ////////////////////////////////////////////////
 
   const [keyword, setKeyword] = useState('');
 
@@ -140,7 +138,6 @@ const App = () => {
           </Grid>
         </Grid>
       </Container>
-      {/* <Footer /> */}
 
       <EmptyTextFieldPrompt
         handleDialogClose={handleDialogClose}

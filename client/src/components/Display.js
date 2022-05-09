@@ -1,5 +1,14 @@
 import React from 'react';
-import { Paper, Typography, Card, CardMedia, Grow } from '@mui/material';
+import {
+  Paper,
+  Typography,
+  Card,
+  CardMedia,
+  Grow,
+  useMediaQuery,
+} from '@mui/material';
+import { theme } from '../themes/theme.js';
+
 import Grid from '@mui/material/Grid';
 import { useSelector } from 'react-redux';
 import Documentation from './Documentation';
@@ -10,6 +19,8 @@ import NoArticlesPrompt from './NoArticlesPrompt';
 import Words from './Words';
 
 const Display = ({ handleDicModalOpen }) => {
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -30,14 +41,14 @@ const Display = ({ handleDicModalOpen }) => {
       articles.integrity.length === 0 &&
       panelSwitch
     ) {
-      setPanelSwitch(true); //打開開關
+      setPanelSwitch(true);
       handleDialogOpen();
     }
     if (
       typeof articles.response !== 'undefined' &&
       articles.integrity.length === 0
     ) {
-      setPanelSwitch(true); //打開開關
+      setPanelSwitch(true);
       handleDialogOpen();
     }
     if (
@@ -61,7 +72,12 @@ const Display = ({ handleDicModalOpen }) => {
           mb: '1rem',
         }}
       >
-        <Grid container spacing={5} padding={5} justifyContent={'center'}>
+        <Grid
+          container
+          spacing={isMobile ? 2 : 5}
+          padding={isMobile ? 2 : 5}
+          justifyContent={'center'}
+        >
           {typeof articles.response !== 'undefined' &&
           articles.integrity.length !== 0 &&
           !panelSwitch ? (
@@ -83,7 +99,6 @@ const Display = ({ handleDicModalOpen }) => {
                     >
                       <CardMedia
                         image={`http://www.nytimes.com/${articles.response.docs[articleID].multimedia[0].url}`}
-                        title="img-title"
                         sx={{ height: '300px' }}
                       />
 
