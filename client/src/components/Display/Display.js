@@ -18,7 +18,7 @@ import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
 import NoArticlesPrompt from '../NoArticlesPrompt';
 import Documentation from './Documentation';
 import HomeIcon from '@mui/icons-material/Home';
-import Words from '../DIctionaryPanel/Words';
+import Words from '../DictionaryPanel/Words';
 import Grid from '@mui/material/Grid';
 
 const [HOME, RESULT] = ['Home', 'Result'];

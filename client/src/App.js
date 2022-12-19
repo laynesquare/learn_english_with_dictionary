@@ -1,23 +1,15 @@
 import { Grid, Typography, TextField, Button, Container } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import './index.css';
-import { styled } from '@mui/material/styles';
-import Display from './components/Display';
-import EmptyTextFieldPrompt from './components/EmptyTextFieldPrompt';
-import { useState } from 'react';
-import { fetchArticles } from './actions/articles.js';
 import { fetchDictionary } from './actions/dictionary.js';
+import { fetchArticles } from './actions/articles.js';
 import { useDispatch } from 'react-redux';
-import DictionaryPanel from './components/DictionaryPanel';
-import ResposiveDictionary from './components/ResposiveDictionary';
-
-const CssTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'white',
-    },
-  },
-});
+import { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import Display from './components/Display/Display';
+import EmptyTextFieldPrompt from './components/EmptyTextFieldPrompt';
+import ResposiveDictionary from './components/DictionaryPanel/ResposiveDictionary';
+import DictionaryPanel from './components/DictionaryPanel/DictionaryPanel';
+import './index.css';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -151,5 +143,13 @@ const App = () => {
     </>
   );
 };
+
+const CssTextField = styled(TextField)({
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'white',
+    },
+  },
+});
 
 export default App;
