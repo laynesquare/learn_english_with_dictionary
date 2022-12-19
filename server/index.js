@@ -1,14 +1,14 @@
-import express from 'express';
-import cors from 'cors';
 import getPassageRoute from './routes/passages.js';
+import express from 'express';
 import dotenv from 'dotenv';
-const app = express();
-dotenv.config();
+import cors from 'cors';
 
+const app = express();
+
+dotenv.config();
 app.use(cors());
 
 app.use('/getPassages', getPassageRoute);
-
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () =>
