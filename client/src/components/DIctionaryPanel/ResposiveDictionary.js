@@ -1,11 +1,11 @@
 import { Modal, Box } from '@mui/material';
 import DictionaryPanel from './DictionaryPanel';
 
-const ResposiveDictionary = ({ rwdDictionary, setRwdDictionary }) => {
+const ResposiveDictionary = ({ rwpDicPanel, setRwpDicPanel }) => {
   return (
     <Modal
-      open={rwdDictionary}
-      onClose={() => setRwdDictionary(false)}
+      open={rwpDicPanel}
+      onClose={() => setRwpDicPanel(false)}
       aria-labelledby="Responsive_dictionary"
       aria-describedby="Responsive_dictionary"
     >
@@ -17,9 +17,9 @@ const ResposiveDictionary = ({ rwdDictionary, setRwdDictionary }) => {
 };
 
 const style = {
-  minWidth: '360px',
   transform: 'translate(-50%, -50%)',
   boxShadow: 24,
+  minWidth: '360px',
   position: 'absolute',
   maxWidth: '80%',
   left: '50%',

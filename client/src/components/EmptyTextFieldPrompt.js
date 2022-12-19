@@ -7,13 +7,17 @@ import {
   Button,
 } from '@mui/material';
 
-const EmptyTextFieldPrompt = ({ dialogOpen, handleDialogClose }) => {
+const EmptyTextFieldPrompt = ({
+  emptyTextFieldPrompt,
+  setEmptyTextFieldPrompt,
+}) => {
   return (
     <Dialog
-      open={dialogOpen}
-      onClose={handleDialogClose}
+      open={emptyTextFieldPrompt}
+      onClose={() => setEmptyTextFieldPrompt(false)}
       aria-labelledby="EmptyTextFieldPrompt"
       aria-describedby="Textfield_cannot_be_empty"
+      sx={{ p: '1rem' }}
     >
       <DialogTitle id="Textfield_cannot_be_empty">
         Textfield cannot be empty
@@ -24,7 +28,11 @@ const EmptyTextFieldPrompt = ({ dialogOpen, handleDialogClose }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleDialogClose} size="small">
+        <Button
+          variant="contained"
+          onClick={() => setEmptyTextFieldPrompt(false)}
+          size="small"
+        >
           Got It
         </Button>
       </DialogActions>

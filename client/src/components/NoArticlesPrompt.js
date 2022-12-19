@@ -7,24 +7,24 @@ import {
   Button,
 } from '@mui/material';
 
-const NoArticlesPrompt = ({ handleDialogClose, dialogOpen }) => {
+const NoArticlesPrompt = ({ openNoResultPrompt, setOpenNoResultPrompt }) => {
   return (
     <Dialog
-      open={dialogOpen}
-      onClose={handleDialogClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      open={openNoResultPrompt}
+      onClose={setOpenNoResultPrompt}
+      aria-labelledby="Textfield-cannot-be-empty"
+      aria-describedby="Enter-another-keyword–for-search"
     >
-      <DialogTitle id="Textfield_cannot_be_empty">
+      <DialogTitle id="Textfield-cannot-be-empty">
         Cannot find any passages
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText id="Enter-another-keyword–for-search">
           Enter another keyword for search.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleDialogClose} size="large">
+        <Button onClick={openNoResultPrompt} size="large">
           Got It
         </Button>
       </DialogActions>

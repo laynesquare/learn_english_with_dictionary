@@ -1,34 +1,35 @@
-import { Grid, Typography, TextField, Button, Container } from '@mui/material';
+import {
+  useMediaQuery,
+  Typography,
+  TextField,
+  Container,
+  Button,
+  Grid,
+} from '@mui/material';
 import { fetchDictionary } from './actions/dictionary.js';
 import { fetchArticles } from './actions/articles.js';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import Display from './components/Display/Display';
+import { theme } from './themes/theme';
 import EmptyTextFieldPrompt from './components/EmptyTextFieldPrompt';
 import ResposiveDictionary from './components/DictionaryPanel/ResposiveDictionary';
 import DictionaryPanel from './components/DictionaryPanel/DictionaryPanel';
+import SearchIcon from '@mui/icons-material/Search';
+import Display from './components/Display/Display';
 import './index.css';
 
 const App = () => {
   const dispatch = useDispatch();
-
-  const [dicModalOpen, setDicModalOpen] = useState(false);
-  const handleDicModalOpen = () => setDicModalOpen(true);
-  const handleDicModalClose = () => setDicModalOpen(false);
-
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const handleDialogOpen = () => setDialogOpen(true);
-  const handleDialogClose = () => setDialogOpen(false);
-
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const [keyword, setKeyword] = useState('');
+  const [rwpDicPanel, setRwpDicPanel] = useState(false);
+  const [emptyTextFieldPrompt, setEmptyTextFieldPrompt] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (keyword === '') {
-      handleDialogOpen();
+      setEmptyTextFieldPrompt(true);
     } else {
       dispatch(fetchArticles(keyword));
       dispatch(fetchDictionary(keyword));
@@ -37,12 +38,11 @@ const App = () => {
 
   return (
     <>
-      {/* Everything is inside this container */}
-      <Container maxWidth="xl" sx={{ p: '1rem 1rem' }}>
+      <Container maxWidth="xl" sx={{ p: '1rem 1rem', minWidth: '360px' }}>
         <Typography
           variant="h2"
           align="center"
-          sx={{ pt: '1rem', fontFamily: 'Grenze Gotisch' }}
+          sx={{ ...appStyle.title }}
           gutterBottom
         >
           Learn English with Dictionary
@@ -51,25 +51,13 @@ const App = () => {
           variant="h6"
           display="block"
           align="center"
-          sx={{
-            width: '80',
-            ml: 'auto',
-            mr: 'auto',
-            mb: '2rem',
-            fontFamily: 'Grenze Gotisch',
-          }}
+          sx={{ ...appStyle.subTitle }}
           gutterBottom
         >
-          facilitate English learning through a dictionary
+          Facilitate English learning through a dictionary
         </Typography>
 
-        <form
-          autoComplete="off"
-          noValidate
-          onSubmit={(e) => {
-            handleSubmit(e);
-          }}
-        >
+        <form autoComplete="off" noValidate onSubmit={(e) => handleSubmit(e)}>
           <Grid
             container
             justifyContent="center"
@@ -83,14 +71,8 @@ const App = () => {
                 label="Search for a keyword"
                 placeholder="e.g. government"
                 autoComplete="off"
-                onChange={(e) => {
-                  setKeyword(`${e.target.value}`);
-                }}
-                InputProps={{
-                  inputProps: {
-                    style: { textAlign: 'center' },
-                  },
-                }}
+                onChange={(e) => setKeyword(`${e.target.value}`)}
+                InputProps={{ inputProps: { style: { textAlign: 'center' } } }}
                 color="secondary"
               ></CssTextField>
             </Grid>
@@ -99,9 +81,7 @@ const App = () => {
                 color="primary"
                 variant="contained"
                 type="submit"
-                sx={{
-                  borderRadius: '10rem',
-                }}
+                sx={{ borderRadius: '10rem' }}
               >
                 <SearchIcon />
               </Button>
@@ -110,46 +90,51 @@ const App = () => {
         </form>
 
         <Grid container spacing={3} sx={{ mt: '0.5rem' }}>
-          <Grid item sm={12} md={12} lg={8}>
-            <Display handleDicModalOpen={handleDicModalOpen} />
+          <Grid item xs={12} lg={8}>
+            <Display />
           </Grid>
-          <Grid
-            item
-            sm={12}
-            md={12}
-            lg={4}
-            sx={{
-              mt: '4rem',
-              display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
-              alignSelf: 'start',
-              position: 'sticky',
-              top: '0',
-            }}
-          >
-            <DictionaryPanel />
+          <Grid item lg={4} sx={{ ...appStyle.dicPanel }}>
+            {!isMobile && <DictionaryPanel />}
+
+            {isMobile && (
+              <ResposiveDictionary
+                rwpDicPanel={rwpDicPanel}
+                setRwpDicPanel={setRwpDicPanel}
+              />
+            )}
           </Grid>
         </Grid>
       </Container>
 
       <EmptyTextFieldPrompt
-        handleDialogClose={handleDialogClose}
-        dialogOpen={dialogOpen}
-      />
-
-      <ResposiveDictionary
-        dicModalOpen={dicModalOpen}
-        handleDicModalClose={handleDicModalClose}
+        emptyTextFieldPrompt={emptyTextFieldPrompt}
+        setEmptyTextFieldPrompt={setEmptyTextFieldPrompt}
       />
     </>
   );
 };
 
 const CssTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: 'white',
-    },
-  },
+  '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'white' } },
 });
+
+const appStyle = {
+  title: { pt: '1rem', fontFamily: 'Moul' },
+
+  subTitle: {
+    fontFamily: 'Moul',
+    width: '80',
+    ml: 'auto',
+    mr: 'auto',
+    mb: '2rem',
+  },
+
+  dicPanel: {
+    alignSelf: 'start',
+    position: 'sticky',
+    mt: '4rem',
+    top: '0',
+  },
+};
 
 export default App;
