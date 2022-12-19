@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
-
 import { articles } from './articles.js';
-import { keyword } from './keyword.js';
+import { dictionary } from './dictionary';
 
-export const reducers = combineReducers({ articles, keyword });
+export const reducers = combineReducers({ articles, dictionary });

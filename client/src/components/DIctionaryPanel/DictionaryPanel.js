@@ -7,6 +7,8 @@ const DictionaryPanel = () => {
   let dictionary = useSelector((state) => state.dictionary);
   if (dictionary === LOADING_DICTIONARY) return <DicPanelSkeleton />;
 
+  // console.log(dictionary);
+
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="center" sx={{ ...dicStyle.mostOuter }}>
