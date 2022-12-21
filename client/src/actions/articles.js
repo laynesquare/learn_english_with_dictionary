@@ -1,29 +1,42 @@
 import * as api from '../api/index.js';
+import {
+  LOADING_ARTICLES,
+  FETCH_NYT_ARTICLES,
+  NO_ARTICLES,
+} from '../constants/actionTypes';
 
 export const fetchArticles = (keyword) => async (dispatch) => {
+  dispatch({ type: LOADING_ARTICLES });
+
   try {
-    const { data } = await api.fetchArticles(keyword);
+    const {
+      data: [
+        {
+          response: { docs: docP1 },
+        },
+        {
+          response: { docs: docP2 },
+        },
+      ],
+    } = await api.fetchArticles(keyword);
 
-    const articlesId = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const docCollection = docP1.concat(docP2);
 
-    const newArticles = articlesId.filter((id) => {
-      const integrity =
-        typeof data.response == 'undefined' ||
-        typeof data.response.docs[id] == 'undefined' ||
-        typeof data.response.docs[id].multimedia == 'undefined' ||
-        typeof data.response.docs[id].multimedia[0] == 'undefined' ||
-        typeof data.response.docs[id].multimedia[0].url == 'undefined';
-      if (!integrity === true) return Number.isFinite(id);
-      return '';
-    });
+    console.log(docCollection);
 
-    const newData = { ...data, integrity: [...newArticles] };
+    for (let i = 0; i < docCollection.length; i++) {
+      if (!docCollection[i].multimedia.length) {
+        docCollection.splice(i, 1);
+        i--;
+      }
+    }
 
-    dispatch({
-      type: 'FETCH',
-      payload: newData,
-    });
+    console.log('still execute?');
+
+    dispatch({ type: FETCH_NYT_ARTICLES, payload: docCollection });
   } catch (error) {
     console.log(error.message);
+    dispatch({ type: NO_ARTICLES });
+    console.log('still execute?', 'erro');
   }
 };

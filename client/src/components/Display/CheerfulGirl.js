@@ -1,5 +1,5 @@
 import { useLottie } from 'lottie-react';
-import icon from '../../assets/search_icon.json';
+import icon from '../../assets/cheerful-girl.json';
 
 const CheerfulGirl = () => {
   const options = {

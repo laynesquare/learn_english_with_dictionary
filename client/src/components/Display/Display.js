@@ -29,6 +29,8 @@ const Display = () => {
   const [openNoResultPrompt, setOpenNoResultPrompt] = useState(false);
   const [currentPanel, setCurrentPanel] = useState(HOME);
 
+  console.log(articles);
+
   useEffect(() => {
     if (!articles) {
       setCurrentPanel(HOME);
@@ -101,6 +103,8 @@ const Home = ({ currentPanel }) => {
 };
 
 const Result = ({ currentPanel, articles }) => {
+  const [isHover, setIsHover] = useState(null);
+
   if (currentPanel !== RESULT) return null;
   if (articles === LOADING_ARTICLES) return <ResultSkeleton />;
   if (!articles) return null;
@@ -108,21 +112,30 @@ const Result = ({ currentPanel, articles }) => {
   return (
     <>
       {articles.map((piece, idx) => {
-        const { multimedia, abstract } = piece;
+        const { multimedia, lead_paragraph, abstract, web_url, headline } =
+          piece;
         return (
           <Grow in key={idx}>
-            <Grid item xs={12} sm={12} md={6} sx={{ wordWrap: 'break-word' }}>
-              <Card sx={{ bgcolor: 'transparent', borderRadius: '2rem' }}>
+            <Grid item xs={12} md={6} sx={{ wordWrap: 'break-word' }}>
+              <Card sx={{ ...resultStyle.articleCard }}>
                 <CardMedia
+                  onClick={() => window.open(web_url)}
+                  onMouseEnter={() => setIsHover(idx)}
+                  onMouseLeave={() => setIsHover(null)}
                   image={`http://www.nytimes.com/${multimedia[0].url}`}
-                  sx={{ height: '300px' }}
+                  sx={{ ...resultStyle.img(isHover, idx) }}
                 />
-                <Typography
-                  variant="h7"
-                  sx={{ margin: '0.5rem', display: 'block' }}
-                >
-                  <Words abstract={abstract} />
-                </Typography>
+                <Box p={1.5}>
+                  <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                    <Words abstract={headline?.main} />
+                  </Typography>
+                  <Typography variant="h7" sx={{}}>
+                    <Words abstract={abstract} />
+                  </Typography>
+                  <Typography variant="h7" sx={{}}>
+                    <Words abstract={lead_paragraph} />
+                  </Typography>
+                </Box>
               </Card>
             </Grid>
           </Grow>
@@ -149,12 +162,7 @@ const ResultSkeleton = () => {
                   animation="wave"
                 />
 
-                <Skeleton
-                  variant="rectangle"
-                  height={'80px'}
-                  width={'100%'}
-                  sx={{}}
-                />
+                <Skeleton variant="rectangle" height={'80px'} width={'100%'} />
               </Card>
             </Grid>
           </Grow>
@@ -162,6 +170,37 @@ const ResultSkeleton = () => {
       })}
     </>
   );
+};
+
+const resultStyle = {
+  articleCard: {
+    borderRadius: '8px',
+    bgcolor: 'transparent',
+    position: 'relative',
+  },
+
+  img(isHover, idx) {
+    return {
+      transition: 'all 0.1s ease-in',
+      cursor: 'pointer',
+      height: '300px',
+
+      '&::before': {
+        transition: 'all 0.2s ease-in-out',
+        fontFamily: 'Moul',
+        textAlign: 'center',
+        position: 'absolute',
+        fontSize: '1.5rem',
+        content: "'Read in full on NYT'",
+        width: '100%',
+        color: 'white',
+        p: '2rem 0 8rem 0',
+        background:
+          'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%)',
+        transform: isHover === idx ? 'translateY(0px)' : 'translateY(-100%)',
+      },
+    };
+  },
 };
 
 export default Display;

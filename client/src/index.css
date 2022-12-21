@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Moul&family=Noto+Serif&display=swap');
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
+
+

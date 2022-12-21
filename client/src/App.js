@@ -13,18 +13,17 @@ import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { theme } from './themes/theme';
 import EmptyTextFieldPrompt from './components/EmptyTextFieldPrompt';
-import ResposiveDictionary from './components/DictionaryPanel/ResposiveDictionary';
 import DictionaryPanel from './components/DictionaryPanel/DictionaryPanel';
 import SearchIcon from '@mui/icons-material/Search';
 import Display from './components/Display/Display';
+import Footer from './components/Footer/Footer';
 import './index.css';
 
 const App = () => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
-  const [keyword, setKeyword] = useState('');
-  const [rwpDicPanel, setRwpDicPanel] = useState(false);
   const [emptyTextFieldPrompt, setEmptyTextFieldPrompt] = useState(false);
+  const [keyword, setKeyword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +37,7 @@ const App = () => {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ p: '1rem 1rem', minWidth: '360px' }}>
+      <Container maxWidth="xl" sx={{ ...appStyle.mostOuter }}>
         <Typography
           variant="h2"
           align="center"
@@ -95,16 +94,11 @@ const App = () => {
           </Grid>
           <Grid item lg={4} sx={{ ...appStyle.dicPanel }}>
             {!isMobile && <DictionaryPanel />}
-
-            {isMobile && (
-              <ResposiveDictionary
-                rwpDicPanel={rwpDicPanel}
-                setRwpDicPanel={setRwpDicPanel}
-              />
-            )}
           </Grid>
         </Grid>
       </Container>
+
+      <Footer />
 
       <EmptyTextFieldPrompt
         emptyTextFieldPrompt={emptyTextFieldPrompt}
@@ -119,7 +113,13 @@ const CssTextField = styled(TextField)({
 });
 
 const appStyle = {
-  title: { pt: '1rem', fontFamily: 'Moul' },
+  mostOuter: {
+    p: '1rem 1rem',
+    minWidth: '360px',
+    minHeight: '100vh',
+  },
+
+  title: { pt: '2rem', fontFamily: 'Moul' },
 
   subTitle: {
     fontFamily: 'Moul',

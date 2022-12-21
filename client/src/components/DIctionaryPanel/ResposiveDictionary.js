@@ -1,11 +1,11 @@
 import { Modal, Box } from '@mui/material';
 import DictionaryPanel from './DictionaryPanel';
 
-const ResposiveDictionary = ({ rwpDicPanel, setRwpDicPanel }) => {
+const ResposiveDictionary = ({ rwdDictionary, setRwdDictionary }) => {
   return (
     <Modal
-      open={rwpDicPanel}
-      onClose={() => setRwpDicPanel(false)}
+      open={rwdDictionary}
+      onClose={() => setRwdDictionary(false)}
       aria-labelledby="Responsive_dictionary"
       aria-describedby="Responsive_dictionary"
     >

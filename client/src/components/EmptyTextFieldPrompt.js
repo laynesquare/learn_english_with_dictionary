@@ -33,7 +33,7 @@ const EmptyTextFieldPrompt = ({
           onClick={() => setEmptyTextFieldPrompt(false)}
           size="small"
         >
-          Got It
+          Got it
         </Button>
       </DialogActions>
     </Dialog>

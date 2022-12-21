@@ -24,8 +24,8 @@ const NoArticlesPrompt = ({ openNoResultPrompt, setOpenNoResultPrompt }) => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={openNoResultPrompt} size="large">
-          Got It
+        <Button onClick={() => setOpenNoResultPrompt(false)} size="large">
+          Got it
         </Button>
       </DialogActions>
     </Dialog>
