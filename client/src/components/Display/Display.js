@@ -13,7 +13,9 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { LOADING_ARTICLES } from '../../constants/actionTypes';
+import { fetchArticles } from '../../actions/articles.js';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { theme } from '../../themes/theme.js';
 import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
 import NoArticlesPrompt from '../NoArticlesPrompt';
@@ -21,8 +23,6 @@ import Documentation from './Documentation';
 import HomeIcon from '@mui/icons-material/Home';
 import Words from './Words';
 import Grid from '@mui/material/Grid';
-import { fetchArticles } from '../../actions/articles.js';
-import { useDispatch } from 'react-redux';
 
 const [HOME, RESULT] = ['Home', 'Result'];
 

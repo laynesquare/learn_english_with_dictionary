@@ -50,6 +50,7 @@ const footerStyle = {
     justifyContent: 'center',
     alignItems: 'flex-end',
     position: 'relative',
+    minWidth: '360px',
     display: 'flex',
     height: '150px',
     width: '100%',

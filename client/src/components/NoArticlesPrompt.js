@@ -1,9 +1,9 @@
 import {
-  Dialog,
+  DialogContentText,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
+  Dialog,
   Button,
 } from '@mui/material';
 

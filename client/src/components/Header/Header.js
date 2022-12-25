@@ -25,7 +25,7 @@ const Header = () => {
   return (
     <>
       <Typography
-        variant="h2"
+        variant="h3"
         align="center"
         sx={{ ...headerStyle.title }}
         gutterBottom

@@ -1,15 +1,15 @@
 import {
-  Dialog,
-  DialogActions,
-  DialogContent,
   DialogContentText,
+  DialogContent,
+  DialogActions,
   DialogTitle,
+  Dialog,
   Button,
 } from '@mui/material';
 
 const EmptyTextFieldPrompt = ({
-  emptyTextFieldPrompt,
   setEmptyTextFieldPrompt,
+  emptyTextFieldPrompt,
 }) => {
   return (
     <Dialog

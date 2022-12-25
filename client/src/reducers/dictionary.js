@@ -1,9 +1,9 @@
-import { NONE_DEF } from '../constants/dictionaryInitialState';
 import {
-  NO_DEFINITION,
-  FETCH_DICTIONARY,
   LOADING_DICTIONARY,
+  FETCH_DICTIONARY,
+  NO_DEFINITION,
 } from '../constants/actionTypes';
+import { NONE_DEF } from '../constants/dictionaryInitialState';
 
 export const dictionary = (dictionary = NONE_DEF, action) => {
   switch (action.type) {
