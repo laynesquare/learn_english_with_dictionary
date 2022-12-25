@@ -1,19 +1,19 @@
-import { Typography, Grid, useMediaQuery } from '@mui/material';
+import { Typography, Grid, useMediaQuery, Chip } from '@mui/material';
 import { fetchDictionary } from '../../actions/dictionary.js';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { theme } from '../../themes/theme.js';
-import ResposiveDictionary from './ResposiveDictionary';
+import ResposiveDictionary from '../DictionaryPanel/ResposiveDictionary';
 
-const Words = ({ abstract }) => {
+const Words = ({ wordSrc }) => {
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const [rwdDictionary, setRwdDictionary] = useState(false);
-  const words = abstract.split(' ');
+  const words = wordSrc.split(' ');
 
   const handleClickWord = (word) => {
     dispatch(fetchDictionary(word));
-    setRwdDictionary(true);
+    if (isMobile) setRwdDictionary(true);
   };
 
   return (

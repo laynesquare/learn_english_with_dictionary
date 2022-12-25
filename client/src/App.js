@@ -1,93 +1,18 @@
-import {
-  useMediaQuery,
-  Typography,
-  TextField,
-  Container,
-  Button,
-  Grid,
-} from '@mui/material';
-import { fetchDictionary } from './actions/dictionary.js';
-import { fetchArticles } from './actions/articles.js';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
-import { styled } from '@mui/material/styles';
+import { useMediaQuery, Container, Grid } from '@mui/material';
 import { theme } from './themes/theme';
-import EmptyTextFieldPrompt from './components/EmptyTextFieldPrompt';
 import DictionaryPanel from './components/DictionaryPanel/DictionaryPanel';
-import SearchIcon from '@mui/icons-material/Search';
 import Display from './components/Display/Display';
 import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header';
 import './index.css';
 
 const App = () => {
-  const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
-  const [emptyTextFieldPrompt, setEmptyTextFieldPrompt] = useState(false);
-  const [keyword, setKeyword] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (keyword === '') {
-      setEmptyTextFieldPrompt(true);
-    } else {
-      dispatch(fetchArticles(keyword));
-      dispatch(fetchDictionary(keyword));
-    }
-  };
 
   return (
     <>
       <Container maxWidth="xl" sx={{ ...appStyle.mostOuter }}>
-        <Typography
-          variant="h2"
-          align="center"
-          sx={{ ...appStyle.title }}
-          gutterBottom
-        >
-          Learn English with Dictionary
-        </Typography>
-        <Typography
-          variant="h6"
-          display="block"
-          align="center"
-          sx={{ ...appStyle.subTitle }}
-          gutterBottom
-        >
-          Facilitate English learning through a dictionary
-        </Typography>
-
-        <form autoComplete="off" noValidate onSubmit={(e) => handleSubmit(e)}>
-          <Grid
-            container
-            justifyContent="center"
-            spacing={2}
-            alignItems="center"
-          >
-            <Grid item>
-              <CssTextField
-                required
-                size="medium"
-                label="Search for a keyword"
-                placeholder="e.g. government"
-                autoComplete="off"
-                onChange={(e) => setKeyword(`${e.target.value}`)}
-                InputProps={{ inputProps: { style: { textAlign: 'center' } } }}
-                color="secondary"
-              ></CssTextField>
-            </Grid>
-            <Grid item>
-              <Button
-                color="primary"
-                variant="contained"
-                type="submit"
-                sx={{ borderRadius: '10rem' }}
-              >
-                <SearchIcon />
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-
+        <Header />
         <Grid container spacing={3} sx={{ mt: '0.5rem' }}>
           <Grid item xs={12} lg={8}>
             <Display />
@@ -97,20 +22,10 @@ const App = () => {
           </Grid>
         </Grid>
       </Container>
-
       <Footer />
-
-      <EmptyTextFieldPrompt
-        emptyTextFieldPrompt={emptyTextFieldPrompt}
-        setEmptyTextFieldPrompt={setEmptyTextFieldPrompt}
-      />
     </>
   );
 };
-
-const CssTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': { '& fieldset': { borderColor: 'white' } },
-});
 
 const appStyle = {
   mostOuter: {

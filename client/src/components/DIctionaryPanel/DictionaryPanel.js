@@ -104,9 +104,10 @@ const dicStyle = {
   },
 
   word: {
-    letterSpacing: '0.1rem',
+    letterSpacing: '4px',
     textAlign: 'center',
     wordWrap: 'break-word',
+    fontWeight: 'bold',
   },
 
   phonetic: {

@@ -4,6 +4,7 @@ import {
   CardMedia,
   Skeleton,
   Paper,
+  Chip,
   Card,
   Grow,
   Box,
@@ -18,8 +19,10 @@ import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
 import NoArticlesPrompt from '../NoArticlesPrompt';
 import Documentation from './Documentation';
 import HomeIcon from '@mui/icons-material/Home';
-import Words from '../DictionaryPanel/Words';
+import Words from './Words';
 import Grid from '@mui/material/Grid';
+import { fetchArticles } from '../../actions/articles.js';
+import { useDispatch } from 'react-redux';
 
 const [HOME, RESULT] = ['Home', 'Result'];
 
@@ -103,8 +106,7 @@ const Home = ({ currentPanel }) => {
 };
 
 const Result = ({ currentPanel, articles }) => {
-  const [isHover, setIsHover] = useState(null);
-
+  const dispatch = useDispatch();
   if (currentPanel !== RESULT) return null;
   if (articles === LOADING_ARTICLES) return <ResultSkeleton />;
   if (!articles) return null;
@@ -112,29 +114,44 @@ const Result = ({ currentPanel, articles }) => {
   return (
     <>
       {articles.map((piece, idx) => {
-        const { multimedia, lead_paragraph, abstract, web_url, headline } =
-          piece;
+        const {
+          lead_paragraph,
+          multimedia,
+          headline,
+          abstract,
+          keywords,
+          web_url,
+        } = piece;
         return (
           <Grow in key={idx}>
-            <Grid item xs={12} md={6} sx={{ wordWrap: 'break-word' }}>
+            <Grid item xs={12} md={6}>
               <Card sx={{ ...resultStyle.articleCard }}>
-                <CardMedia
-                  onClick={() => window.open(web_url)}
-                  onMouseEnter={() => setIsHover(idx)}
-                  onMouseLeave={() => setIsHover(null)}
-                  image={`http://www.nytimes.com/${multimedia[0].url}`}
-                  sx={{ ...resultStyle.img(isHover, idx) }}
-                />
+                <CardImg web_url={web_url} idx={idx} multimedia={multimedia} />
                 <Box p={1.5}>
                   <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                    <Words abstract={headline?.main} />
+                    <Words wordSrc={headline?.main} />
                   </Typography>
-                  <Typography variant="h7" sx={{}}>
-                    <Words abstract={abstract} />
+                  <Typography variant="h7">
+                    <Words wordSrc={abstract} />
                   </Typography>
-                  <Typography variant="h7" sx={{}}>
-                    <Words abstract={lead_paragraph} />
+                  <Typography variant="h7">
+                    <Words wordSrc={lead_paragraph} />
                   </Typography>
+                  {keywords.length > 0 && (
+                    <Box sx={{ ...resultStyle.keywordChip }}>
+                      {keywords.slice(0, 3).map((keyword, idx) => (
+                        <Chip
+                          key={idx}
+                          clickable
+                          size="small"
+                          variant="outlined"
+                          label={keyword.value.toUpperCase()}
+                          onClick={() => dispatch(fetchArticles(keyword.value))}
+                          sx={{ overflow: 'hidden' }}
+                        />
+                      ))}
+                    </Box>
+                  )}
                 </Box>
               </Card>
             </Grid>
@@ -142,6 +159,20 @@ const Result = ({ currentPanel, articles }) => {
         );
       })}
     </>
+  );
+};
+
+const CardImg = ({ web_url, idx, multimedia }) => {
+  const [isHover, setIsHover] = useState(null);
+
+  return (
+    <CardMedia
+      onClick={() => window.open(web_url)}
+      onMouseEnter={() => setIsHover(idx)}
+      onMouseLeave={() => setIsHover(null)}
+      image={`http://www.nytimes.com/${multimedia[0].url}`}
+      sx={{ ...resultStyle.img(isHover, idx) }}
+    />
   );
 };
 
@@ -153,16 +184,24 @@ const ResultSkeleton = () => {
       {articleCardArr.map((_, idx) => {
         return (
           <Grow in key={idx}>
-            <Grid item xs={12} md={6} sx={{ wordWrap: 'break-word' }}>
-              <Card sx={{ bgcolor: 'transparent', borderRadius: '2rem' }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{ wordWrap: 'break-word', borderRadius: '8px' }}
+            >
+              <Card sx={{ bgcolor: 'transparent' }}>
                 <Skeleton
                   variant="rectangle"
                   height={'300px'}
                   width={'100%'}
                   animation="wave"
                 />
-
-                <Skeleton variant="rectangle" height={'80px'} width={'100%'} />
+                <Box p={2}>
+                  <Skeleton sx={{ width: '100%' }} />
+                  <Skeleton sx={{ width: '100%' }} />
+                  <Skeleton sx={{ width: '100%' }} />
+                </Box>
               </Card>
             </Grid>
           </Grow>
@@ -175,8 +214,16 @@ const ResultSkeleton = () => {
 const resultStyle = {
   articleCard: {
     borderRadius: '8px',
-    bgcolor: 'transparent',
     position: 'relative',
+    bgcolor: 'transparent',
+  },
+
+  keywordChip: {
+    columnGap: '10px',
+    flexWrap: 'wrap',
+    display: 'flex',
+    rowGap: '15px',
+    p: '16px 8px',
   },
 
   img(isHover, idx) {
@@ -186,7 +233,7 @@ const resultStyle = {
       height: '300px',
 
       '&::before': {
-        transition: 'all 0.2s ease-in-out',
+        transition: 'padding 0.4s ease-in-out, opacity 0.3s ease-in',
         fontFamily: 'Moul',
         textAlign: 'center',
         position: 'absolute',
@@ -194,10 +241,10 @@ const resultStyle = {
         content: "'Read in full on NYT'",
         width: '100%',
         color: 'white',
-        p: '2rem 0 8rem 0',
         background:
           'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%)',
-        transform: isHover === idx ? 'translateY(0px)' : 'translateY(-100%)',
+        p: isHover === idx ? '2rem 0 8rem 0' : '0',
+        opacity: isHover === idx ? '100%' : '0%',
       },
     };
   },
