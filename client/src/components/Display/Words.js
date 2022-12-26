@@ -1,4 +1,4 @@
-import { Typography, Grid, useMediaQuery, Chip } from '@mui/material';
+import { Typography, Grid, useMediaQuery } from '@mui/material';
 import { fetchDictionary } from '../../actions/dictionary.js';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
