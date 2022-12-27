@@ -18,8 +18,6 @@ export const getPassages = async (req, res) => {
       `${base}${keyword}${page}1${key}${process.env.NYT_API_KEY}`
     );
 
-    console.log(`${base}${keyword}${page}1${key}${process.env.NYT_API_KEY}`);
-
     const { data: page2 } = await axios.get(
       `${base}${keyword}${page}2${key}${process.env.NYT_API_KEY}`
     );

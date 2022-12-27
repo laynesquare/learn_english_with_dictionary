@@ -7,8 +7,6 @@ const DictionaryPanel = () => {
   let dictionary = useSelector((state) => state.dictionary);
   if (dictionary === LOADING_DICTIONARY) return <DicPanelSkeleton />;
 
-  // console.log(dictionary);
-
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="center" sx={{ ...dicStyle.mostOuter }}>
@@ -75,8 +73,8 @@ const DicPanelSkeleton = () => {
 
         <Divider variant="middle" sx={{ m: '1rem 0' }} />
 
-        {defPerBox.map(() => (
-          <Box sx={{ ...dicSkeletonStyle.defPerBox }}>
+        {defPerBox.map((idx) => (
+          <Box key={idx} sx={{ ...dicSkeletonStyle.defPerBox }}>
             <Skeleton
               variant="circular"
               sx={{ ...dicSkeletonStyle.defPerBox.bulletPoint }}

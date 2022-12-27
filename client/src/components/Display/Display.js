@@ -32,8 +32,6 @@ const Display = () => {
   const [openNoResultPrompt, setOpenNoResultPrompt] = useState(false);
   const [currentPanel, setCurrentPanel] = useState(HOME);
 
-  console.log(articles);
-
   useEffect(() => {
     if (!articles) {
       setCurrentPanel(HOME);

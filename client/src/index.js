@@ -1,13 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { ThemeProvider } from '@mui/material/styles';
+import { reducers } from './reducers';
+import { Provider } from 'react-redux';
 import { theme } from './themes/theme';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import ReactDOM from 'react-dom';
 import thunk from 'redux-thunk';
-import { reducers } from './reducers';
+import App from './App';
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
