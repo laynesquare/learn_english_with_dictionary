@@ -168,7 +168,7 @@ const CardImg = ({ web_url, idx, multimedia }) => {
       onClick={() => window.open(web_url)}
       onMouseEnter={() => setIsHover(idx)}
       onMouseLeave={() => setIsHover(null)}
-      image={`http://www.nytimes.com/${multimedia[0].url}`}
+      image={`https://www.nytimes.com/${multimedia[0].url}`}
       sx={{ ...resultStyle.img(isHover, idx) }}
     />
   );

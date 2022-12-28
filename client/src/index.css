@@ -4,10 +4,11 @@
   width: 5px;
 }
 
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
 }
 
-
+b {
+  color: #ff8161;
+}

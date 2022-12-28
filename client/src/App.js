@@ -1,6 +1,7 @@
 import { useMediaQuery, Container, Grid } from '@mui/material';
 import { theme } from './themes/theme';
 import DictionaryPanel from './components/DictionaryPanel/DictionaryPanel';
+import HeadsUp from './components/HeadsUp/HeadsUp';
 import Display from './components/Display/Display';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
@@ -11,6 +12,7 @@ const App = () => {
 
   return (
     <>
+      <HeadsUp />
       <Container maxWidth="xl" sx={{ ...appStyle.mostOuter }}>
         <Header />
         <Grid container spacing={3} sx={{ mt: '0.5rem' }}>
@@ -29,9 +31,9 @@ const App = () => {
 
 const appStyle = {
   mostOuter: {
-    p: '1rem 1rem',
-    minWidth: '360px',
     minHeight: '100vh',
+    minWidth: '360px',
+    p: '1rem 1rem',
   },
 
   title: { pt: '2rem', fontFamily: 'Moul' },
