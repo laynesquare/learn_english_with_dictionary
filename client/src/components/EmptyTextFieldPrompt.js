@@ -19,11 +19,11 @@ const EmptyTextFieldPrompt = ({
       aria-describedby="Textfield_cannot_be_empty"
       sx={{ p: '1rem' }}
     >
-      <DialogTitle id="Textfield_cannot_be_empty">
+      <DialogTitle id="Textfield_cannot_be_empty" fontWeight="bold">
         Textfield cannot be empty
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="Enter_a_keyword_for_search">
+        <DialogContentText id="Enter_a_keyword_for_search" variant="body2">
           Enter a keyword for search.
         </DialogContentText>
       </DialogContent>

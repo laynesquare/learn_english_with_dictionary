@@ -6,10 +6,14 @@ import {
   Dialog,
   Button,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const HeadsUp = () => {
   const [HeadsUp, setHeadsUp] = useState(true);
+
+  useEffect(() => {
+    serverAwaker();
+  }, []);
 
   return (
     <Dialog
@@ -37,7 +41,7 @@ const HeadsUp = () => {
           <br />
           If you make <b>frequent API requests for articles</b>, New York Times
           API server will block the access and have it back up after about
-          <b> 10 secs</b>.
+          <b> 30 secs</b>.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -52,5 +56,7 @@ const HeadsUp = () => {
     </Dialog>
   );
 };
+
+const serverAwaker = () => fetch(process.env.REACT_APP_LEARN_ENGLISH_API);
 
 export default HeadsUp;

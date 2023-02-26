@@ -15,12 +15,17 @@ const NoArticlesPrompt = ({ openNoResultPrompt, setOpenNoResultPrompt }) => {
       aria-labelledby="Textfield-cannot-be-empty"
       aria-describedby="Enter-another-keyword–for-search"
     >
-      <DialogTitle id="Textfield-cannot-be-empty">
-        Cannot find any passages
+      <DialogTitle id="Textfield-cannot-be-empty" fontWeight="bold">
+        Oops, cannot find any passages ...
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="Enter-another-keyword–for-search">
-          Enter another keyword for search.
+        <DialogContentText
+          id="Enter-another-keyword–for-search"
+          variant="body2"
+        >
+          Enter <b>another keyword</b> for search. Or you make{' '}
+          <b>too many requests</b> within a short time. Sorry, it's New York
+          Times' fault. You might have to wait around 30 secs to make a search.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
