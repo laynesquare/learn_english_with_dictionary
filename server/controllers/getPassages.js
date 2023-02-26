@@ -14,28 +14,18 @@ export const getPassages = async (req, res) => {
   const { base, key, page } = urlNyt;
 
   try {
-    const { data: page1 } = await axios.get(
-      `${base}${keyword}${page}1${key}${process.env.NYT_API_KEY}`
-    );
+    const [{ data: page1 }, { data: page2 }] = await Promise.all([
+      axios.get(`${base}${keyword}${page}1${key}${process.env.NYT_API_KEY}`),
+      axios.get(`${base}${keyword}${page}2${key}${process.env.NYT_API_KEY}`),
+    ]);
 
-    const { data: page2 } = await axios.get(
-      `${base}${keyword}${page}2${key}${process.env.NYT_API_KEY}`
-    );
+    if (!page1.response.docs.length || !page2.response.docs.length) {
+      throw new Error('Cannot find any passages');
+    }
 
-    const [
-      {
-        response: { docs: docs1 },
-      },
-      {
-        response: { docs: docs2 },
-      },
-    ] = [page1, page2];
-
-    if (!docs1.length && !docs2.length) throw 'No articles found';
-
-    res.status(200).json([page1, page2]);
+    res.status(200).send([page1, page2]);
   } catch (error) {
+    console.error(error);
     res.status(404).json({ msg: error.message });
-    console.log(error);
   }
 };
