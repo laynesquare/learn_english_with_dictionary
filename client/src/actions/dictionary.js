@@ -1,8 +1,8 @@
 import * as api from '../api/index.js';
 import {
-  NO_DEFINITION,
-  FETCH_DICTIONARY,
   LOADING_DICTIONARY,
+  FETCH_DICTIONARY,
+  NO_DEFINITION,
 } from '../constants/actionTypes.js';
 
 export const fetchDictionary = (keyword) => async (dispatch) => {

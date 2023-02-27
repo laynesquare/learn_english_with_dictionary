@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import EmptyTextFieldPrompt from '../EmptyTextFieldPrompt';
+import SlowLoadingPromt from './SlowLoadingPrompt';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Header = () => {
@@ -68,6 +69,8 @@ const Header = () => {
           </Grid>
         </Grid>
       </form>
+
+      <SlowLoadingPromt />
 
       <EmptyTextFieldPrompt
         emptyTextFieldPrompt={emptyTextFieldPrompt}

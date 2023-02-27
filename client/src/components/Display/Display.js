@@ -11,11 +11,10 @@ import {
   Tab,
   Tabs,
 } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { LOADING_ARTICLES } from '../../constants/actionTypes';
 import { fetchArticles } from '../../actions/articles.js';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 import { theme } from '../../themes/theme.js';
 import ArticleSharpIcon from '@mui/icons-material/ArticleSharp';
 import NoArticlesPrompt from '../NoArticlesPrompt';

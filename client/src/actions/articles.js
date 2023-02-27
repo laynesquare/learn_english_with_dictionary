@@ -2,36 +2,35 @@ import * as api from '../api/index.js';
 import {
   FETCH_NYT_ARTICLES,
   LOADING_ARTICLES,
+  SLOW_LOADING,
   NO_ARTICLES,
 } from '../constants/actionTypes';
 
 export const fetchArticles = (keyword) => async (dispatch) => {
   dispatch({ type: LOADING_ARTICLES });
 
+  const loadingCountdown = setTimeout(
+    () => dispatch({ type: SLOW_LOADING }),
+    3000
+  );
+
   try {
-    const {
-      data: [
-        {
-          response: { docs: docP1 },
-        },
-        {
-          response: { docs: docP2 },
-        },
-      ],
-    } = await api.fetchArticles(keyword);
+    const { data } = await api.fetchArticles(keyword);
+    const [page1, page2] = await data;
 
-    const docCollection = docP1.concat(docP2);
+    clearTimeout(loadingCountdown);
 
-    for (let i = 0; i < docCollection.length; i++) {
-      if (!docCollection[i].multimedia.length) {
-        docCollection.splice(i, 1);
-        i--;
-      }
-    }
+    const dataCollection = [
+      ...page1.response.docs,
+      ...page2.response.docs,
+    ].filter((doc) => doc.multimedia.length);
 
-    dispatch({ type: FETCH_NYT_ARTICLES, payload: docCollection });
+    if (!dataCollection.length) throw new Error(`no search results`);
+
+    dispatch({ type: FETCH_NYT_ARTICLES, payload: dataCollection });
   } catch (error) {
     console.log(error.message);
+    clearTimeout(loadingCountdown);
     dispatch({ type: NO_ARTICLES });
   }
 };
