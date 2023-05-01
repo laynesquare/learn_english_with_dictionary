@@ -15,15 +15,15 @@ export const fetchArticles = (keyword) => async (dispatch) => {
   );
 
   try {
-    const { data } = await api.fetchArticles(keyword);
-    const [page1, page2] = await data;
+    const {
+      data: [page1],
+    } = await api.fetchArticles(keyword);
 
     clearTimeout(loadingCountdown);
 
-    const dataCollection = [
-      ...page1.response.docs,
-      ...page2.response.docs,
-    ].filter((doc) => doc.multimedia.length);
+    const dataCollection = [...page1.response.docs].filter(
+      (doc) => doc.multimedia.length
+    );
 
     if (!dataCollection.length) throw new Error(`no search results`);
 
